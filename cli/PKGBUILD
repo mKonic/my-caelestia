@@ -1,0 +1,30 @@
+# Maintainer: mkonic <mkonic676@gmail.com>
+# Builds caelestia-cli from local source (my-caelestia/cli/).
+
+pkgname='caelestia-cli'
+pkgver=$(< "$(dirname "${BASH_SOURCE[0]}")/../VERSION")
+pkgrel=1
+pkgdesc='Caelestia dotfiles CLI (my-caelestia fork)'
+arch=('any')
+url='https://github.com/mKonic/my-caelestia'
+license=('GPL-3.0-only')
+depends=('python' 'python-pillow' 'python-materialyoucolor' 'libnotify' 'swappy' 'grim' 'dart-sass'
+         'app2unit' 'wl-clipboard' 'slurp' 'gpu-screen-recorder' 'dconf' 'cliphist' 'fuzzel')
+optdepends=('caelestia-shell: shell control and screenshot function')
+makedepends=('python-build' 'python-installer' 'python-hatch')
+provides=('caelestia-cli' 'caelestia')
+conflicts=('caelestia-cli-git')
+options=(!strip)
+
+build() {
+    cd "$startdir"
+    python -m build --wheel --no-isolation --outdir "$srcdir/dist"
+}
+
+package() {
+    cd "$startdir"
+    python -m installer --destdir="$pkgdir" "$srcdir/dist"/*.whl
+    install -Dm644 completions/caelestia.fish \
+        "$pkgdir/usr/share/fish/vendor_completions.d/caelestia.fish"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

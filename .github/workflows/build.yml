@@ -1,0 +1,74 @@
+name: Build packages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+env:
+  # Keep makepkg's src/ and pkg/ working dirs out of the repo tree.
+  # Default makepkg places src/ next to PKGBUILD, which collides with
+  # cli/src/ (the actual Python source). These vars redirect to a single
+  # .makepkg/ dir at repo root, separate per package.
+  MAKEPKG_PKGDEST: ${{ github.workspace }}/.makepkg/dist
+
+jobs:
+  build:
+    name: Build .pkg.tar.zst
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+      options: --user root
+
+    steps:
+      - name: Refresh pacman DB and install build deps
+        run: |
+          pacman -Syu --noconfirm --needed \
+            git sudo \
+            cmake ninja \
+            qt6-base qt6-declarative \
+            libqalculate aubio libpipewire \
+            python python-build python-installer python-hatch
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create non-root build user
+        run: |
+          # makepkg refuses to run as root.
+          useradd -m builder
+          echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          mkdir -p "$MAKEPKG_PKGDEST"
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+
+      - name: Build caelestia-cli
+        working-directory: cli
+        run: |
+          sudo -u builder \
+            BUILDDIR="$GITHUB_WORKSPACE/.makepkg/build-cli" \
+            PKGDEST="$MAKEPKG_PKGDEST" \
+            makepkg --noconfirm --nodeps
+
+      - name: Build caelestia-shell
+        working-directory: shell
+        run: |
+          sudo -u builder \
+            BUILDDIR="$GITHUB_WORKSPACE/.makepkg/build-shell" \
+            PKGDEST="$MAKEPKG_PKGDEST" \
+            makepkg --noconfirm --nodeps
+
+      - name: List built packages
+        run: |
+          echo "::group::Built packages"
+          ls -lh "$MAKEPKG_PKGDEST"/*.pkg.tar.zst
+          echo "::endgroup::"
+
+      - name: Upload package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: caelestia-packages
+          path: .makepkg/dist/*.pkg.tar.zst
+          if-no-files-found: error
+          retention-days: 14
