@@ -32,3 +32,9 @@ cli/.direnv
 cli/result
 cli/__pycache__/
 **/__pycache__/
+
+# makepkg build outputs (PKGBUILDs override BUILDDIR/PKGDEST to avoid
+# collision with cli/src/, which holds real Python source code)
+.makepkg/
+*.pkg.tar.zst
+*.pkg.tar.zst.sig
