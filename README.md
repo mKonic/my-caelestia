@@ -6,7 +6,7 @@ A personal Wayland desktop shell built on Hyprland and Quickshell. Started life 
 ## Installation
 
 ```sh
-git clone https://github.com/mKonic/my-caelesta
+git clone https://github.com/mKonic/my-caelestia
 cd my-caelestia
 ./install.fish
 ```
