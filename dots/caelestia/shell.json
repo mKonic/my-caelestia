@@ -1,0 +1,183 @@
+{
+    "background": {
+        "desktopClock": {
+            "enabled": true
+        }
+    },
+    "bar": {
+        "activeWindow": {
+            "compact": false,
+            "inverted": false
+        },
+        "clock": {
+            "background": true,
+            "showDate": true
+        },
+        "excludedScreens": [
+        ],
+        "scrollActions": {
+            "brightness": false
+        },
+        "status": {
+            "showBattery": false,
+            "showBluetooth": true,
+            "showNetwork": false,
+            "showWifi": false
+        },
+        "tray": {
+            "background": true,
+            "compact": false,
+            "recolour": false
+        }
+    },
+    "dashboard": {
+        "performance": {
+            "showBattery": false
+        }
+    },
+    "notifs": {
+        "openExpanded": false
+    },
+    "osd": {
+        "enableBrightness": false
+    },
+    "utilities": {
+        "vpn": {
+            "enabled": true,
+            "provider": [
+                {
+                    "displayName": "Mullvad NYC 301",
+                    "enabled": true,
+                    "interface": "us-nyc-wg-301",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 302",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-302",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 501",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-501",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 502",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-502",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 504",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-504",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 505",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-505",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 506",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-506",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 601",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-601",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 602",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-602",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 603",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-603",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 604",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-604",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 605",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-605",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 606",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-606",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 701",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-701",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 702",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-702",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 703",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-703",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 801",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-801",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 802",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-802",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 803",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-803",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 805",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-805",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 806",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-806",
+                    "name": "wireguard"
+                },
+                {
+                    "displayName": "Mullvad NYC 807",
+                    "enabled": false,
+                    "interface": "us-nyc-wg-807",
+                    "name": "wireguard"
+                }
+            ]
+        }
+    }
+}

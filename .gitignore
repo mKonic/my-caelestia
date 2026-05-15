@@ -1,0 +1,34 @@
+# Hyprland scheme runtime state
+dots/hypr/scheme/current.conf
+
+# Spicetify runtime state
+dots/spicetify/config-xpui.ini
+dots/spicetify/Themes/caelestia/color.ini
+
+# btop runtime
+dots/btop/btop.log
+dots/btop/themes/
+
+# fish runtime
+dots/fish/fish_variables
+dots/fish/conf.d/
+
+# AUR
+dots/.SRCINFO
+
+# Quickshell / Nix / Qt build artifacts
+shell/.direnv
+shell/result
+shell/.qmlls.ini
+shell/build/
+shell/.cache/
+shell/logs
+
+# caelestia-cli python build artifacts
+cli/dist/
+cli/build/
+cli/*.egg-info/
+cli/.direnv
+cli/result
+cli/__pycache__/
+**/__pycache__/
