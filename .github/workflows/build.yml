@@ -23,23 +23,41 @@ jobs:
       options: --user root
 
     steps:
-      - name: Refresh pacman DB and install build deps
+      - name: Refresh pacman DB and install build deps (official repos)
         run: |
           pacman -Syu --noconfirm --needed \
             git sudo \
             cmake ninja \
             qt6-base qt6-declarative qt6-shadertools \
-            libqalculate aubio libpipewire libcava \
+            libqalculate aubio libpipewire \
             python python-build python-installer python-hatch
-
-      - name: Checkout repo
-        uses: actions/checkout@v4
 
       - name: Create non-root build user
         run: |
           # makepkg refuses to run as root.
           useradd -m builder
           echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+      - name: Bootstrap paru (AUR helper) for libcava
+        run: |
+          # libcava is AUR-only (provides /usr/lib/pkgconfig/libcava.pc, which
+          # the shell's plugin/src/Caelestia/CMakeLists.txt requires).
+          sudo -u builder bash -c '
+            set -e
+            cd /tmp
+            git clone https://aur.archlinux.org/paru-bin.git
+            cd paru-bin
+            makepkg -si --noconfirm
+          '
+
+      - name: Install AUR build deps via paru
+        run: sudo -u builder paru -S --noconfirm --needed libcava
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fix workspace ownership for builder user
+        run: |
           mkdir -p "$MAKEPKG_PKGDEST"
           chown -R builder:builder "$GITHUB_WORKSPACE"
 
