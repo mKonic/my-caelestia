@@ -27,31 +27,33 @@ jobs:
         run: |
           pacman -Syu --noconfirm --needed \
             git sudo \
-            cmake ninja \
+            cmake ninja meson \
             qt6-base qt6-declarative qt6-shadertools \
             libqalculate aubio libpipewire \
+            fftw ncurses alsa-lib iniparser libglvnd sdl2 portaudio sndio libpulse \
             python python-build python-installer python-hatch
+
+      - name: Build and install libcava from upstream
+        run: |
+          # libcava is not in the official Arch repos and the AUR's paru-bin
+          # is currently stale (linked against libalpm.so.15). Vendor the
+          # LukashonakV/cava fork — same source the AUR libcava PKGBUILD uses,
+          # which provides /usr/lib/libcava.so + headers + libcava.pc.
+          set -e
+          cd /tmp
+          curl -fsSL -o libcava.tar.gz \
+            "https://github.com/LukashonakV/cava/archive/refs/tags/0.10.7.tar.gz"
+          tar -xzf libcava.tar.gz
+          cd cava-0.10.7
+          meson setup -Dcava_font=false --prefix=/usr build
+          meson compile -C build
+          meson install -C build
 
       - name: Create non-root build user
         run: |
           # makepkg refuses to run as root.
           useradd -m builder
           echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-      - name: Bootstrap paru (AUR helper) for libcava
-        run: |
-          # libcava is AUR-only (provides /usr/lib/pkgconfig/libcava.pc, which
-          # the shell's plugin/src/Caelestia/CMakeLists.txt requires).
-          sudo -u builder bash -c '
-            set -e
-            cd /tmp
-            git clone https://aur.archlinux.org/paru-bin.git
-            cd paru-bin
-            makepkg -si --noconfirm
-          '
-
-      - name: Install AUR build deps via paru
-        run: sudo -u builder paru -S --noconfirm --needed libcava
 
       - name: Checkout repo
         uses: actions/checkout@v4
