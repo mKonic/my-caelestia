@@ -3,9 +3,13 @@ name: Build packages
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
     branches: [main]
   workflow_dispatch: {}
+
+permissions:
+  contents: write   # required for the release step on tag pushes
 
 env:
   # Keep makepkg's src/ and pkg/ working dirs out of the repo tree.
@@ -92,3 +96,13 @@ jobs:
           path: .makepkg/dist/*.pkg.tar.zst
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish GitHub release (tag pushes only)
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: .makepkg/dist/*.pkg.tar.zst
