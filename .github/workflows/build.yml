@@ -28,8 +28,8 @@ jobs:
           pacman -Syu --noconfirm --needed \
             git sudo \
             cmake ninja \
-            qt6-base qt6-declarative \
-            libqalculate aubio libpipewire \
+            qt6-base qt6-declarative qt6-shadertools \
+            libqalculate aubio libpipewire libcava \
             python python-build python-installer python-hatch
 
       - name: Checkout repo
